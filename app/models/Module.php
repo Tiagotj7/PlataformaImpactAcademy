@@ -29,4 +29,18 @@ class Module
     $st->execute(['pid'=>$programId,'t'=>$titulo,'o'=>$ordem]);
     return (int)$pdo->lastInsertId();
   }
+
+  public function update(int $id, string $titulo, int $ordem): void
+  {
+    $pdo = Database::pdo();
+    $st = $pdo->prepare("UPDATE modulos SET titulo=:t, ordem=:o WHERE id=:id");
+    $st->execute(['id'=>$id,'t'=>$titulo,'o'=>$ordem]);
+  }
+
+  public function delete(int $id): void
+  {
+    $pdo = Database::pdo();
+    $st = $pdo->prepare("DELETE FROM modulos WHERE id=:id");
+    $st->execute(['id'=>$id]);
+  }
 }

@@ -17,6 +17,9 @@ class View
     ob_start();
     require $viewFile;
     $content = ob_get_clean();
+    if (!isset($content)) {
+      $content = '';
+    }
 
     require __DIR__ . '/../views/layout.php';
   }

@@ -62,4 +62,29 @@ class Lesson
     $st->execute(['pid'=>$programId]);
     return (int)($st->fetch()['c'] ?? 0);
   }
+  public function update(int $id, array $data): void
+{
+  $pdo = Database::pdo();
+  $st = $pdo->prepare("UPDATE aulas SET
+    titulo=:t, descricao=:d, video_url=:v, texto=:tx, pdf=:p, status=:s, ordem=:o
+    WHERE id=:id
+  ");
+  $st->execute([
+    'id'=>$id,
+    't'=>$data['titulo'],
+    'd'=>$data['descricao'] ?? null,
+    'v'=>$data['video_url'] ?? null,
+    'tx'=>$data['texto'] ?? null,
+    'p'=>$data['pdf'] ?? null,
+    's'=>$data['status'] ?? 'publicada',
+    'o'=>(int)($data['ordem'] ?? 0),
+  ]);
+}
+
+public function delete(int $id): void
+{
+  $pdo = Database::pdo();
+  $st = $pdo->prepare("DELETE FROM aulas WHERE id=:id");
+  $st->execute(['id'=>$id]);
+}
 }

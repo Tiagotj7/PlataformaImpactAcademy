@@ -13,6 +13,7 @@ use App\Core\Auth;
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
 </head>
 <body class="bg-ia text-light" data-ia-page>
+  <?php if (!isset($content)) { $content = ''; } ?>
   <?php require __DIR__ . '/partials/navbar.php'; ?>
 
   <main class="container py-4">

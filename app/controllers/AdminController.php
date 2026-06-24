@@ -213,4 +213,149 @@ class AdminController extends Controller
     flash('success', 'Aula criada.');
     $this->redirect("admin/modulos/$moduleId/aulas");
   }
+
+  public function moduleEdit(int $id): void
+{
+  $module = (new \App\Models\Module())->find($id);
+  if (!$module) {
+    flash('error', 'Módulo não encontrado.');
+    $this->redirect('admin/programas');
+  }
+
+  $program = (new \App\Models\Program())->find((int)$module['programa_id']);
+  if (!$program) {
+    flash('error', 'Programa não encontrado.');
+    $this->redirect('admin/programas');
+  }
+
+  $this->view('admin/module_form', [
+    'title' => 'Editar Módulo',
+    'program' => $program,
+    'module' => $module
+  ]);
+}
+
+public function moduleUpdate(int $id): void
+{
+  if (!\App\Core\Csrf::validate($_POST['_csrf'] ?? null)) {
+    flash('error', 'CSRF inválido.');
+    $this->redirect("admin/modulos/$id/editar");
+  }
+
+  $moduleModel = new \App\Models\Module();
+  $module = $moduleModel->find($id);
+  if (!$module) {
+    flash('error', 'Módulo não encontrado.');
+    $this->redirect('admin/programas');
+  }
+
+  $titulo = trim((string)($_POST['titulo'] ?? ''));
+  $ordem  = (int)($_POST['ordem'] ?? 0);
+
+  if ($titulo === '') {
+    flash('error', 'Título é obrigatório.');
+    $this->redirect("admin/modulos/$id/editar");
+  }
+
+  $moduleModel->update($id, $titulo, $ordem);
+  flash('success', 'Módulo atualizado.');
+  $this->redirect('admin/programas/' . (int)$module['programa_id'] . '/modulos');
+}
+
+public function moduleDelete(int $id): void
+{
+  if (!\App\Core\Csrf::validate($_POST['_csrf'] ?? null)) {
+    flash('error', 'CSRF inválido.');
+    $this->redirect('admin/programas');
+  }
+
+  $moduleModel = new \App\Models\Module();
+  $module = $moduleModel->find($id);
+  if (!$module) {
+    flash('error', 'Módulo não encontrado.');
+    $this->redirect('admin/programas');
+  }
+
+  $programId = (int)$module['programa_id'];
+  $moduleModel->delete($id);
+
+  flash('success', 'Módulo excluído.');
+  $this->redirect("admin/programas/$programId/modulos");
+}
+
+public function lessonEdit(int $id): void
+{
+  $lesson = (new \App\Models\Lesson())->find($id);
+  if (!$lesson) {
+    flash('error', 'Aula não encontrada.');
+    $this->redirect('admin/programas');
+  }
+
+  $module = (new \App\Models\Module())->find((int)$lesson['modulo_id']);
+  if (!$module) {
+    flash('error', 'Módulo não encontrado.');
+    $this->redirect('admin/programas');
+  }
+
+  $this->view('admin/lesson_form', [
+    'title' => 'Editar Aula',
+    'module' => $module,
+    'lesson' => $lesson
+  ]);
+}
+
+public function lessonUpdate(int $id): void
+{
+  if (!\App\Core\Csrf::validate($_POST['_csrf'] ?? null)) {
+    flash('error', 'CSRF inválido.');
+    $this->redirect("admin/aulas/$id/editar");
+  }
+
+  $lessonModel = new \App\Models\Lesson();
+  $lesson = $lessonModel->find($id);
+  if (!$lesson) {
+    flash('error', 'Aula não encontrada.');
+    $this->redirect('admin/programas');
+  }
+
+  $titulo = trim((string)($_POST['titulo'] ?? ''));
+  if ($titulo === '') {
+    flash('error', 'Título é obrigatório.');
+    $this->redirect("admin/aulas/$id/editar");
+  }
+
+  $lessonModel->update($id, [
+    'titulo' => $titulo,
+    'descricao' => $_POST['descricao'] ?? null,
+    'video_url' => $_POST['video_url'] ?? null,
+    'texto' => $_POST['texto'] ?? null,
+    'pdf' => $_POST['pdf'] ?? null,
+    'status' => $_POST['status'] ?? 'publicada',
+    'ordem' => (int)($_POST['ordem'] ?? 0),
+  ]);
+
+  flash('success', 'Aula atualizada.');
+  $this->redirect('admin/modulos/' . (int)$lesson['modulo_id'] . '/aulas');
+}
+
+public function lessonDelete(int $id): void
+{
+  if (!\App\Core\Csrf::validate($_POST['_csrf'] ?? null)) {
+    flash('error', 'CSRF inválido.');
+    $this->redirect('admin/programas');
+  }
+
+  $lessonModel = new \App\Models\Lesson();
+  $lesson = $lessonModel->find($id);
+  if (!$lesson) {
+    flash('error', 'Aula não encontrada.');
+    $this->redirect('admin/programas');
+  }
+
+  $moduleId = (int)$lesson['modulo_id'];
+  $lessonModel->delete($id);
+
+  flash('success', 'Aula excluída.');
+  $this->redirect("admin/modulos/$moduleId/aulas");
+}
 }

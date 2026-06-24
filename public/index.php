@@ -145,6 +145,28 @@ $router->post('admin/modulos/{id}/aulas/novo', 'App\Controllers\AdminController@
   [RoleMiddleware::class, 'admin']
 ]);
 
+// EDITAR / EXCLUIR MÓDULOS
+$router->get('admin/modulos/{id}/editar', 'App\Controllers\AdminController@moduleEdit', [
+  AuthMiddleware::class, [RoleMiddleware::class, 'admin']
+]);
+$router->post('admin/modulos/{id}/editar', 'App\Controllers\AdminController@moduleUpdate', [
+  AuthMiddleware::class, [RoleMiddleware::class, 'admin']
+]);
+$router->post('admin/modulos/{id}/excluir', 'App\Controllers\AdminController@moduleDelete', [
+  AuthMiddleware::class, [RoleMiddleware::class, 'admin']
+]);
+
+// EDITAR / EXCLUIR AULAS
+$router->get('admin/aulas/{id}/editar', 'App\Controllers\AdminController@lessonEdit', [
+  AuthMiddleware::class, [RoleMiddleware::class, 'admin']
+]);
+$router->post('admin/aulas/{id}/editar', 'App\Controllers\AdminController@lessonUpdate', [
+  AuthMiddleware::class, [RoleMiddleware::class, 'admin']
+]);
+$router->post('admin/aulas/{id}/excluir', 'App\Controllers\AdminController@lessonDelete', [
+  AuthMiddleware::class, [RoleMiddleware::class, 'admin']
+]);
+
 
 /**
  * =========================
