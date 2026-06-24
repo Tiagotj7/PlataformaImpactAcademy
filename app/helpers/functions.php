@@ -36,3 +36,18 @@ function is_admin(): bool {
   $u = Auth::user();
   return $u && ($u['tipo'] ?? null) === 'admin';
 }
+
+function media_url(?string $path): ?string
+{
+  if (!$path) return null;
+
+  $path = trim($path);
+
+  // URL externa
+  if (preg_match('~^https?://~i', $path)) {
+    return $path;
+  }
+
+  // Caminho interno (ex: assets/img/x.png ou uploads/x.jpg)
+  return url(ltrim($path, '/'));
+}
