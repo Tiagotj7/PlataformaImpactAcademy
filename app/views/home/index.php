@@ -12,17 +12,21 @@
 
 <div class="row g-3 mt-1">
   <?php foreach (($programs ?? []) as $p): ?>
+    <?php
+      $img = media_url($p['imagem'] ?? null);
+      $fallback = program_placeholder_src();
+    ?>
     <div class="col-md-4">
       <div class="ia-card p-3 h-100">
-        <?php $img = media_url($p['imagem'] ?? null); ?>
-        <?php if ($img): ?>
-          <img
-            src="<?= e($img) ?>"
-            class="ia-program-img mb-2"
-            alt="<?= e($p['nome']) ?>"
-            loading="lazy"
-          >
-        <?php endif; ?>
+        <img
+          src="<?= e($img ?: $fallback) ?>"
+          data-fallback="<?= e($fallback) ?>"
+          class="ia-program-img mb-2"
+          alt="<?= e($p['nome']) ?>"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          onerror="this.onerror=null;this.src=this.dataset.fallback;"
+        >
 
         <div class="d-flex justify-content-between align-items-start">
           <h3 class="h6 mb-2"><?= e($p['nome']) ?></h3>
