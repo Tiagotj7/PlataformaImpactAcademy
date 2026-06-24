@@ -1,0 +1,23 @@
+Options -Indexes
+RewriteEngine On
+
+# Bloqueia acesso direto a pastas sensíveis
+RewriteRule ^(app|config|database)/ - [F,L]
+
+# Mapeia /assets/* => /public/assets/*
+RewriteRule ^assets/(.*)$ public/assets/$1 [L]
+
+# Se existir arquivo ou pasta na raiz, serve direto
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Tudo o que sobrar vai para o front controller real
+RewriteRule ^ public/index.php [QSA,L]
+
+<Files ".env">
+  Order allow,deny
+  Deny from all
+</Files>
+
+RewriteRule ^\.env$ - [F,L]

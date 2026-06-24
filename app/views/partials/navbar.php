@@ -19,6 +19,7 @@ use App\Core\Csrf;
           <li class="nav-item"><a class="nav-link" href="<?= url('dashboard') ?>">Dashboard</a></li>
           <li class="nav-item"><a class="nav-link" href="<?= url('meus-programas') ?>">Meus Programas</a></li>
           <li class="nav-item"><a class="nav-link" href="<?= url('ranking') ?>">Ranking</a></li>
+          <li class="nav-item"><a class="nav-link" href="<?= url('perfil') ?>">Perfil</a></li>
           <?php if (is_admin()): ?>
             <li class="nav-item"><a class="nav-link" href="<?= url('admin') ?>">Admin</a></li>
           <?php endif; ?>

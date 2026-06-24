@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 session_start();
 
+require_once __DIR__ . '/../app/core/Dotenv.php';
+\App\Core\Dotenv::load(dirname(__DIR__));
+
 $app = require __DIR__ . '/../config/app.php';
 date_default_timezone_set($app['timezone'] ?? 'UTC');
 
@@ -60,6 +63,14 @@ $router->post('aula/{id}/concluir', 'App\Controllers\StudentController@concludeL
 ]);
 
 $router->get('ranking', 'App\Controllers\StudentController@ranking', [
+  AuthMiddleware::class
+]);
+
+$router->get('perfil', 'App\Controllers\StudentController@profile', [
+  AuthMiddleware::class
+]);
+
+$router->post('perfil', 'App\Controllers\StudentController@updateProfile', [
   AuthMiddleware::class
 ]);
 

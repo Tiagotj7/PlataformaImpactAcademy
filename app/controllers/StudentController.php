@@ -9,6 +9,7 @@ use App\Models\Lesson;
 use App\Models\Module;
 use App\Models\Program;
 use App\Models\Progress;
+use App\Models\User;
 use App\Models\XpLog;
 
 class StudentController extends Controller
@@ -135,5 +136,75 @@ class StudentController extends Controller
       'top' => $top,
       'xpModel' => $xp
     ]);
+  }
+
+  public function profile(): void
+  {
+    $userId = Auth::id();
+    $user = (new User())->find($userId);
+
+    if (!$user) {
+      flash('error', 'Usuário não encontrado.');
+      $this->redirect('dashboard');
+    }
+
+    $this->view('student/profile', [
+      'title' => 'Meu Perfil',
+      'profileUser' => $user
+    ]);
+  }
+
+  public function updateProfile(): void
+  {
+    if (!Csrf::validate($_POST['_csrf'] ?? null)) {
+      flash('error', 'CSRF inválido.');
+      $this->redirect('perfil');
+    }
+
+    $userId = Auth::id();
+    $nome = trim((string)($_POST['nome'] ?? ''));
+    $foto = trim((string)($_POST['foto'] ?? ''));
+    $foto = $foto !== '' ? $foto : null;
+
+    if ($nome === '') {
+      flash('error', 'Nome é obrigatório.');
+      $this->redirect('perfil');
+    }
+
+    $userModel = new User();
+    $userModel->updateProfile($userId, $nome, $foto);
+
+    $current = (string)($_POST['senha_atual'] ?? '');
+    $new = (string)($_POST['nova_senha'] ?? '');
+    $confirm = (string)($_POST['confirmar_senha'] ?? '');
+
+    if ($new !== '' || $confirm !== '' || $current !== '') {
+      if (strlen($new) < 6) {
+        flash('error', 'A nova senha deve ter no mínimo 6 caracteres.');
+        $this->redirect('perfil');
+      }
+
+      if ($new !== $confirm) {
+        flash('error', 'Confirmação de senha não confere.');
+        $this->redirect('perfil');
+      }
+
+      $dbUser = $userModel->findWithPassword($userId);
+      if (!$dbUser || !password_verify($current, $dbUser['senha'])) {
+        flash('error', 'Senha atual inválida.');
+        $this->redirect('perfil');
+      }
+
+      $hash = password_hash($new, PASSWORD_DEFAULT);
+      $userModel->updatePassword($userId, $hash);
+    }
+
+    if (isset($_SESSION['user'])) {
+      $_SESSION['user']['nome'] = $nome;
+      $_SESSION['user']['foto'] = $foto;
+    }
+
+    flash('success', 'Perfil atualizado com sucesso.');
+    $this->redirect('perfil');
   }
 }

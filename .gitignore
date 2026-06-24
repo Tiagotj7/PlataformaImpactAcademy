@@ -1,0 +1,4 @@
+.env
+/config/database.local.php
+/config/database.prod.php
+/storage/logs/*

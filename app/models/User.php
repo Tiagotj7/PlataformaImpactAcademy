@@ -31,4 +31,34 @@ class User
     $row = $st->fetch();
     return $row ?: null;
   }
+
+  public function findWithPassword(int $id): ?array
+  {
+    $pdo = Database::pdo();
+    $st = $pdo->prepare("SELECT * FROM usuarios WHERE id = :id LIMIT 1");
+    $st->execute(['id' => $id]);
+    $row = $st->fetch(PDO::FETCH_ASSOC);
+    return $row ?: null;
+  }
+
+  public function updateProfile(int $id, string $nome, ?string $foto): void
+  {
+    $pdo = Database::pdo();
+    $st = $pdo->prepare("UPDATE usuarios SET nome=:n, foto=:f WHERE id=:id");
+    $st->execute([
+      'id' => $id,
+      'n'  => $nome,
+      'f'  => $foto
+    ]);
+  }
+
+  public function updatePassword(int $id, string $hash): void
+  {
+    $pdo = Database::pdo();
+    $st = $pdo->prepare("UPDATE usuarios SET senha=:s WHERE id=:id");
+    $st->execute([
+      'id' => $id,
+      's'  => $hash
+    ]);
+  }
 }
