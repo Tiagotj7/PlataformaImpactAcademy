@@ -1,7 +1,7 @@
 <?php
 namespace App\Core;
 
-class Router
+final class Router
 {
   private array $routes = [];
   private string $basePath;
@@ -23,8 +23,12 @@ class Router
 
   private function map(string $method, string $path, string $handler, array $middlewares): void
   {
-    $path = trim($path, '/');
-    $this->routes[] = compact('method', 'path', 'handler', 'middlewares');
+    $this->routes[] = [
+      'method' => $method,
+      'path' => trim($path, '/'),
+      'handler' => $handler,
+      'middlewares' => $middlewares,
+    ];
   }
 
   public function dispatch(string $method, string $uri): void
@@ -33,17 +37,15 @@ class Router
     $path = trim($path, '/');
 
     if ($this->basePath !== '') {
-      if (str_starts_with($path, $this->basePath)) {
-        $path = trim(substr($path, strlen($this->basePath)), '/');
-      }
+      $bp = $this->basePath;
+      if ($path === $bp) $path = '';
+      elseif (str_starts_with($path, $bp . '/')) $path = substr($path, strlen($bp) + 1);
     }
 
     foreach ($this->routes as $route) {
-      if ($route['method'] !== $method) {
-        continue;
-      }
+      if ($route['method'] !== $method) continue;
 
-      $pattern = preg_replace('#\{[a-zA-Z_][a-zA-Z0-9_]*\}#', '([^/]+)', $route['path']);
+      $pattern = preg_replace('#\{[a-zA-Z_][a-zA-Z0-9_]*\}#', '([0-9]+)', $route['path']);
       $pattern = '#^' . $pattern . '$#';
 
       if (preg_match($pattern, $path, $matches)) {
@@ -53,9 +55,9 @@ class Router
           if (is_array($mw)) {
             $class = $mw[0];
             $arg = $mw[1] ?? null;
-            (new $class())->handle($arg);
+            (new $class)->handle($arg);
           } else {
-            (new $mw())->handle();
+            (new $mw)->handle();
           }
         }
 
@@ -67,6 +69,6 @@ class Router
     }
 
     http_response_code(404);
-    echo '404 - Página não encontrada';
+    echo "404 - Página não encontrada";
   }
 }

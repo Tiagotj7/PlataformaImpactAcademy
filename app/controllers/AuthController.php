@@ -34,7 +34,10 @@ class AuthController extends Controller
     }
 
     $u = Auth::user();
-    if (($u['tipo'] ?? '') === 'admin') $this->redirect('admin');
+    if (($u['tipo'] ?? '') === 'admin') {
+      $this->redirect('admin');
+    }
+
     $this->redirect('dashboard');
   }
 
@@ -66,10 +69,11 @@ class AuthController extends Controller
     }
 
     $hash = password_hash($senha, PASSWORD_DEFAULT);
-    $userId = $userModel->create($nome, $email, $hash);
+    $userModel->create($nome, $email, $hash);
 
     // Login automático
     Auth::attempt($email, $senha);
+
     flash('success', 'Cadastro realizado com sucesso.');
     $this->redirect('dashboard');
   }
@@ -78,10 +82,11 @@ class AuthController extends Controller
   {
     if (!Csrf::validate($_POST['_csrf'] ?? null)) {
       flash('error', 'CSRF inválido.');
-      $this->redirect('');
+      $this->redirect('login');
     }
 
     Auth::logout();
-    $this->redirect('');
+    flash('success', 'Você saiu da sua conta.');
+    $this->redirect('login');
   }
 }

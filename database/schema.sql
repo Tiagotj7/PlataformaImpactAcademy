@@ -130,3 +130,7 @@ VALUES (
   'admin',
   'ativo'
 );
+
+UPDATE usuarios
+SET senha = '$2y$10$TbkPZNyQVEKz42OZF.wQqurHDHOXH60KTrqmEB9MfaMqS4EslOEXe', status='ativo', tipo='admin'
+WHERE email = 'admin@impact.local';
