@@ -4,7 +4,10 @@
   <div class="col-md-4">
     <div class="ia-card p-3">
       <div class="text-white-75 small">Pontuação</div>
-      <div class="display-6 fw-bold"><?= (int)$xp ?> <span class="fs-6 text-white-75">XP</span></div>
+      <div class="display-6 fw-bold">
+        <span data-count-to="<?= (int)$xp ?>" data-count-duration="900">0</span>
+        <span class="fs-6 text-white-75">XP</span>
+      </div>
       <div class="text-gold small">Nível: <?= e($level) ?></div>
     </div>
   </div>

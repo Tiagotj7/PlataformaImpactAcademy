@@ -10,8 +10,9 @@ use App\Core\Auth;
   <link rel="icon" href="<?= url('assets/images/favicon.ico') ?>" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="<?= url('assets/css/style.css') ?>">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
 </head>
-<body class="bg-ia text-light">
+<body class="bg-ia text-light" data-ia-page>
   <?php require __DIR__ . '/partials/navbar.php'; ?>
 
   <main class="container py-4">
@@ -20,6 +21,8 @@ use App\Core\Auth;
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
   <script src="<?= url('assets/js/app.js') ?>"></script>
 </body>
 </html>
