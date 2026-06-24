@@ -1,32 +1,72 @@
 <?php
+namespace App\Core;
+
 class Router
 {
-    public function dispatch(): void
-    {
-        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $segments = array_values(array_filter(explode('/', $uri)));
+  private array $routes = [];
+  private string $basePath;
 
-        $controller = 'HomeController';
-        $action = 'index';
+  public function __construct(string $basePath = '')
+  {
+    $this->basePath = trim($basePath, '/');
+  }
 
-        if (!empty($segments[0])) {
-            $controller = ucfirst($segments[0]) . 'Controller';
-        }
+  public function get(string $path, string $handler, array $middlewares = []): void
+  {
+    $this->map('GET', $path, $handler, $middlewares);
+  }
 
-        if (!empty($segments[1])) {
-            $action = $segments[1];
-        }
+  public function post(string $path, string $handler, array $middlewares = []): void
+  {
+    $this->map('POST', $path, $handler, $middlewares);
+  }
 
-        $controllerClass = $controller;
-        if (!class_exists($controllerClass)) {
-            $controllerClass = 'HomeController';
-        }
+  private function map(string $method, string $path, string $handler, array $middlewares): void
+  {
+    $path = trim($path, '/');
+    $this->routes[] = compact('method', 'path', 'handler', 'middlewares');
+  }
 
-        $instance = new $controllerClass();
-        if (!method_exists($instance, $action)) {
-            $action = 'index';
-        }
+  public function dispatch(string $method, string $uri): void
+  {
+    $path = parse_url($uri, PHP_URL_PATH) ?? '/';
+    $path = trim($path, '/');
 
-        $instance->$action();
+    if ($this->basePath !== '') {
+      if (str_starts_with($path, $this->basePath)) {
+        $path = trim(substr($path, strlen($this->basePath)), '/');
+      }
     }
+
+    foreach ($this->routes as $route) {
+      if ($route['method'] !== $method) {
+        continue;
+      }
+
+      $pattern = preg_replace('#\{[a-zA-Z_][a-zA-Z0-9_]*\}#', '([^/]+)', $route['path']);
+      $pattern = '#^' . $pattern . '$#';
+
+      if (preg_match($pattern, $path, $matches)) {
+        array_shift($matches);
+
+        foreach ($route['middlewares'] as $mw) {
+          if (is_array($mw)) {
+            $class = $mw[0];
+            $arg = $mw[1] ?? null;
+            (new $class())->handle($arg);
+          } else {
+            (new $mw())->handle();
+          }
+        }
+
+        [$class, $action] = explode('@', $route['handler']);
+        $controller = new $class();
+        call_user_func_array([$controller, $action], $matches);
+        return;
+      }
+    }
+
+    http_response_code(404);
+    echo '404 - Página não encontrada';
+  }
 }

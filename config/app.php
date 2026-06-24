@@ -1,6 +1,7 @@
 <?php
 return [
-    'name' => 'Impact Academy',
-    'base_url' => '/',
-    'env' => 'development',
+  // Se estiver em subpasta (ex: /impact/public), ajuste para '/impact/public'
+  'base_path' => '',
+  'app_name' => 'Impact Academy',
+  'timezone' => 'America/Sao_Paulo',
 ];

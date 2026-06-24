@@ -1,3 +1,1 @@
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('Impact Academy initialized');
-});
+// placeholder (AOS, etc. pode entrar depois)
