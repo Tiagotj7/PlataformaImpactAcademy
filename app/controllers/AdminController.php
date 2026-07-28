@@ -9,6 +9,9 @@ use App\Models\Lesson;
 
 class AdminController extends Controller
 {
+  // Área logada do admin usa o layout com sidebar (não a navbar institucional da home)
+  protected string $defaultLayout = 'layout_app';
+
   public function dashboard(): void
   {
     $this->view('admin/dashboard', ['title' => 'Admin']);

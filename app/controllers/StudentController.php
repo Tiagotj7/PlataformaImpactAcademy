@@ -14,6 +14,9 @@ use App\Models\XpLog;
 
 class StudentController extends Controller
 {
+  // Área logada do aluno usa o layout com sidebar (não a navbar institucional da home)
+  protected string $defaultLayout = 'layout_app';
+
   public function dashboard(): void
   {
     $userId = Auth::id();
