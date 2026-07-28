@@ -4,17 +4,9 @@ use App\Core\Csrf;
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark ia-navbar border-bottom border-gold-25">
   <div class="container">
-    <a class="navbar-brand ia-brand d-flex align-items-center gap-2" href="<?= url('') ?>">
-      <img
-        src="<?= url('assets/images/logo.png') ?>"
-        alt="Impact Academy"
-        class="ia-logo-img"
-        onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';"
-      >
-      <span class="d-none flex-column lh-1" style="display:none;">
-        <span><span class="text-gold">IMPACT</span> ACADEMY</span>
-        <small>Transformando potencial em legado</small>
-      </span>
+    <a class="navbar-brand ia-brand" href="<?= url('') ?>">
+      <span class="text-gold">IMPACT</span> ACADEMY
+      <small>Transformando potencial em legado</small>
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
@@ -25,9 +17,9 @@ use App\Core\Csrf;
       <ul class="navbar-nav mx-lg-auto mb-2 mb-lg-0 gap-lg-1">
         <li class="nav-item"><a class="nav-link" href="<?= url('') ?>">Início</a></li>
         <li class="nav-item"><a class="nav-link" href="<?= url('programas') ?>">Programas</a></li>
-        <li class="nav-item"><a class="nav-link" href="<?= url('') ?>#sobre">Sobre</a></li>
-        <li class="nav-item"><a class="nav-link" href="<?= url('') ?>#depoimentos">Depoimentos</a></li>
-        <li class="nav-item"><a class="nav-link" href="<?= url('') ?>#contato">Contato</a></li>
+        <li class="nav-item"><a class="nav-link" href="<?= url('') ?>/#sobre">Sobre</a></li>
+        <li class="nav-item"><a class="nav-link" href="<?= url('') ?>/#depoimentos">Depoimentos</a></li>
+        <li class="nav-item"><a class="nav-link" href="<?= url('') ?>/#contato">Contato</a></li>
         <?php if (Auth::check()): ?>
           <li class="nav-item"><a class="nav-link" href="<?= url('dashboard') ?>">Dashboard</a></li>
           <li class="nav-item"><a class="nav-link" href="<?= url('ranking') ?>">Ranking</a></li>

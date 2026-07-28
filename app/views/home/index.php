@@ -28,9 +28,15 @@
 
     <div class="col-lg-5">
       <div class="ia-hero-photo">
-        <i class="bi bi-people"></i>
+        <img
+          src="<?= url('assets/images/logo.png') ?>"
+          alt="Impact Academy"
+          class="ia-hero-logo"
+          onerror="this.remove(); document.getElementById('iaHeroFallbackIcon').style.display='block';"
+        >
+        <i class="bi bi-people" id="iaHeroFallbackIcon" style="display:none;"></i>
       </div>
-      <!-- Troque por uma foto real em public/assets/images/hero-team.jpg e substitua o bloco acima por <img> -->
+      <!-- A imagem vem de public/assets/images/logo.png. Se o arquivo não existir, cai no ícone. -->
     </div>
   </div>
 </div>
