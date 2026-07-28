@@ -96,10 +96,11 @@ a, button, .ia-card { will-change: transform; }
   position: sticky; top:0; z-index: 1030;
   transition: background .25s ease, backdrop-filter .25s ease;
 }
-.ia-brand{ font-family: var(--font-display); font-weight: 800; letter-spacing:.06em; }
+.ia-brand { font-family: var(--font-display); font-weight: 800; letter-spacing:.06em; }
 .ia-brand small{
   display:block; font-size:.55rem; letter-spacing:.28em; color: var(--ia-muted); font-weight:600;
 }
+.ia-logo-img{ height:42px; width:auto; object-fit:contain; }
 
 /* =========================================================
    HERO (landing)

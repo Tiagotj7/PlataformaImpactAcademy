@@ -4,9 +4,17 @@ use App\Core\Csrf;
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark ia-navbar border-bottom border-gold-25">
   <div class="container">
-    <a class="navbar-brand ia-brand" href="<?= url('') ?>">
-      <span class="text-gold">IMPACT</span> ACADEMY
-      <small>Transformando potencial em legado</small>
+    <a class="navbar-brand ia-brand d-flex align-items-center gap-2" href="<?= url('') ?>">
+      <img
+        src="<?= url('assets/images/logo.png') ?>"
+        alt="Impact Academy"
+        class="ia-logo-img"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';"
+      >
+      <span class="d-none flex-column lh-1" style="display:none;">
+        <span><span class="text-gold">IMPACT</span> ACADEMY</span>
+        <small>Transformando potencial em legado</small>
+      </span>
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
