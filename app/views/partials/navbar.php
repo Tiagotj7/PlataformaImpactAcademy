@@ -15,7 +15,7 @@ use App\Core\Csrf;
 
     <div class="collapse navbar-collapse" id="nav">
       <ul class="navbar-nav mx-lg-auto mb-2 mb-lg-0 gap-lg-1">
-        <li class="nav-item"><a class="nav-link" href="<?= url('') ?>">Início</a></li>
+        <li class="nav-item"><a class="nav-link" href="<?= url('/') ?>">Início</a></li>
         <li class="nav-item"><a class="nav-link" href="<?= url('') ?>/#programas">Programas</a></li>
         <li class="nav-item"><a class="nav-link" href="<?= url('') ?>/#sobre">Sobre</a></li>
         <li class="nav-item"><a class="nav-link" href="<?= url('') ?>/#depoimentos">Depoimentos</a></li>
