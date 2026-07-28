@@ -3,7 +3,7 @@ namespace App\Core;
 
 class View
 {
-  public static function render(string $view, array $data = []): void
+  public static function render(string $view, array $data = [], string $layout = 'layout'): void
   {
     extract($data);
 
@@ -21,6 +21,7 @@ class View
       $content = '';
     }
 
-    require __DIR__ . '/../views/layout.php';
+    $layoutFile = __DIR__ . '/../views/' . $layout . '.php';
+    require file_exists($layoutFile) ? $layoutFile : __DIR__ . '/../views/layout.php';
   }
 }

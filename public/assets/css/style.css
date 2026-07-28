@@ -1,9 +1,23 @@
+/* =========================================================
+   IMPACT ACADEMY — Design System
+   ========================================================= */
 :root{
   --ia-black:#0B0B0B;
   --ia-dark:#1E1E1E;
+  --ia-panel:#141414;
   --ia-gold:#D4AF37;
+  --ia-gold-soft:#F1D67A;
   --ia-white:#FFFFFF;
+  --ia-muted:rgba(255,255,255,.62);
+  --ia-border:rgba(212,175,55,.18);
+  --ia-radius:14px;
+  --ia-radius-lg:20px;
+  --font-display: 'Poppins', 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
 }
+
+body{ font-family: var(--font-body); }
+h1,h2,h3,h4,h5,h6,.font-display{ font-family: var(--font-display); letter-spacing:.01em; }
 
 .bg-ia{
   background: radial-gradient(1000px 600px at 10% 10%, rgba(212,175,55,.10), transparent 60%),
@@ -13,13 +27,14 @@
 }
 
 .text-gold{ color: var(--ia-gold) !important; }
+.text-white-75{ color: rgba(255,255,255,.75); }
 .link-gold{ color: var(--ia-gold); }
-.link-gold:hover{ color: #f1d67a; }
+.link-gold:hover{ color: var(--ia-gold-soft); }
 
 .ia-card{
   background: rgba(30,30,30,.75);
-  border: 1px solid rgba(212,175,55,.18);
-  border-radius: 14px;
+  border: 1px solid var(--ia-border);
+  border-radius: var(--ia-radius);
   box-shadow: 0 12px 30px rgba(0,0,0,.35);
 }
 
@@ -31,7 +46,7 @@
   color: #0B0B0B;
   font-weight: 700;
 }
-.btn-gold:hover{ filter: brightness(1.05); }
+.btn-gold:hover{ filter: brightness(1.05); color:#0B0B0B; }
 
 .btn-outline-gold{
   border-color: rgba(212,175,55,.7);
@@ -63,6 +78,7 @@ a, button, .ia-card { will-change: transform; }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
 .ia-program-img{
   width: 100%;
   height: 150px;
@@ -71,4 +87,149 @@ a, button, .ia-card { will-change: transform; }
   border: 1px solid rgba(212,175,55,.18);
   background: rgba(0,0,0,.25);
   display: block;
+}
+
+/* =========================================================
+   NAVBAR (área pública)
+   ========================================================= */
+.ia-navbar{
+  position: sticky; top:0; z-index: 1030;
+  transition: background .25s ease, backdrop-filter .25s ease;
+}
+.ia-brand{ font-family: var(--font-display); font-weight: 800; letter-spacing:.06em; }
+.ia-brand small{
+  display:block; font-size:.55rem; letter-spacing:.28em; color: var(--ia-muted); font-weight:600;
+}
+
+/* =========================================================
+   HERO (landing)
+   ========================================================= */
+.ia-hero{
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--ia-radius-lg);
+  padding: 3rem 2.5rem;
+  background:
+    radial-gradient(600px 400px at 100% 0%, rgba(212,175,55,.16), transparent 60%),
+    linear-gradient(180deg, rgba(30,30,30,.9), rgba(11,11,11,.9));
+  border: 1px solid var(--ia-border);
+}
+.ia-hero h1{
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+.ia-hero-photo{
+  position: relative;
+  border-radius: var(--ia-radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(212,175,55,.28), transparent 60%),
+    linear-gradient(160deg, #1c1c1c, #0b0b0b);
+  border: 1px solid var(--ia-border);
+  display:flex; align-items:center; justify-content:center;
+}
+.ia-hero-photo i{ font-size: 6rem; color: rgba(212,175,55,.35); }
+
+.ia-badge-pill{
+  display:flex; flex-direction:column; align-items:center; gap:.5rem;
+  text-align:center; color: var(--ia-muted); font-size:.72rem; font-weight:600;
+  text-transform: uppercase; letter-spacing:.05em;
+}
+.ia-badge-pill .ia-badge-icon{
+  width:56px; height:56px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--ia-border); color: var(--ia-gold); font-size:1.3rem;
+  background: rgba(212,175,55,.06);
+}
+
+/* =========================================================
+   STATS
+   ========================================================= */
+.ia-stat{ text-align:center; }
+.ia-stat .num{ font-family: var(--font-display); font-weight:800; font-size:2rem; color: var(--ia-gold); }
+.ia-stat .label{ font-size:.72rem; color: var(--ia-muted); text-transform:uppercase; letter-spacing:.06em; }
+
+/* =========================================================
+   PROGRAM PILLS (marketing grid)
+   ========================================================= */
+.ia-program-pill{
+  border-radius: var(--ia-radius);
+  padding: 1.25rem 1rem;
+  background: linear-gradient(180deg, rgba(30,30,30,.85), rgba(11,11,11,.85));
+  border: 1px solid var(--ia-border);
+  height:100%;
+}
+.ia-program-pill h4{ font-size:.95rem; font-weight:800; text-transform:uppercase; margin-bottom:.25rem; }
+.ia-program-pill p{ font-size:.78rem; color: var(--ia-muted); margin:0; }
+
+/* =========================================================
+   JOGO OLÍMPICO (gamification teaser)
+   ========================================================= */
+.ia-xp-step{
+  text-align:center; flex:1; min-width:90px;
+}
+.ia-xp-step .ic{
+  width:52px;height:52px;border-radius:14px;margin:0 auto .5rem;
+  display:flex;align-items:center;justify-content:center;
+  background: rgba(212,175,55,.08); border:1px solid var(--ia-border); color: var(--ia-gold);
+}
+.ia-xp-step .pts{ color: var(--ia-gold); font-weight:700; font-size:.78rem; }
+.ia-xp-step .lbl{ font-size:.72rem; color: var(--ia-muted); }
+.ia-xp-arrow{ color: rgba(212,175,55,.35); font-size:1.2rem; align-self:center; }
+
+/* =========================================================
+   SIDEBAR (área logada — aluno/admin)
+   ========================================================= */
+.ia-app{ display:flex; min-height:100vh; }
+.ia-sidebar{
+  width: 250px; flex-shrink:0;
+  background: var(--ia-panel);
+  border-right: 1px solid var(--ia-border);
+  padding: 1.25rem 1rem;
+  position: sticky; top:0; height:100vh; overflow-y:auto;
+}
+.ia-sidebar .ia-brand{ font-size:1.1rem; padding: 0 .5rem .5rem; }
+.ia-sidebar nav{ margin-top:1.25rem; display:flex; flex-direction:column; gap:.15rem; }
+.ia-sidebar .ia-nav-link{
+  display:flex; align-items:center; gap:.65rem;
+  padding:.6rem .75rem; border-radius:10px;
+  color: var(--ia-muted); text-decoration:none; font-size:.88rem; font-weight:500;
+  transition: background .15s ease, color .15s ease;
+}
+.ia-sidebar .ia-nav-link i{ width:18px; text-align:center; font-size:1rem; }
+.ia-sidebar .ia-nav-link:hover{ background: rgba(212,175,55,.08); color: var(--ia-white); }
+.ia-sidebar .ia-nav-link.active{
+  background: var(--ia-gold); color:#0B0B0B; font-weight:700;
+}
+.ia-sidebar .ia-nav-link.disabled{
+  opacity:.4; pointer-events:none;
+}
+.ia-sidebar .ia-nav-soon{
+  margin-left:auto; font-size:.6rem; text-transform:uppercase;
+  background: rgba(212,175,55,.15); color: var(--ia-gold);
+  padding:.1rem .4rem; border-radius:6px; letter-spacing:.04em;
+}
+
+.ia-app-main{ flex:1; min-width:0; }
+.ia-app-topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 1rem 1.5rem; border-bottom:1px solid var(--ia-border);
+}
+.ia-app-content{ padding: 1.5rem; }
+
+.ia-sidebar-toggle{ display:none; }
+
+@media (max-width: 991.98px){
+  .ia-sidebar{
+    position: fixed; left:0; top:0; z-index:1040;
+    transform: translateX(-100%);
+    transition: transform .25s ease;
+    box-shadow: 0 0 40px rgba(0,0,0,.6);
+  }
+  .ia-sidebar.is-open{ transform: translateX(0); }
+  .ia-sidebar-toggle{ display:inline-flex; }
+  .ia-app{ display:block; }
 }
