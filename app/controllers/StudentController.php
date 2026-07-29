@@ -185,7 +185,15 @@ class StudentController extends Controller
       
       $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
       $filename = 'profile_' . $userId . '_' . time() . '.' . $ext;
-      $uploadDir = dirname(__DIR__, 2) . '/public/uploads/profiles/';
+      
+      // Ajuste para InfinityFree: Tenta usar DOCUMENT_ROOT ou caminho relativo
+      $root = $_SERVER['DOCUMENT_ROOT'] ? rtrim($_SERVER['DOCUMENT_ROOT'], '/') : dirname(__DIR__, 2) . '/public';
+      $uploadDir = $root . '/uploads/profiles/';
+      
+      if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+      }
+      
       $dest = $uploadDir . $filename;
       
       if (move_uploaded_file($file['tmp_name'], $dest)) {
