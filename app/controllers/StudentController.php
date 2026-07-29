@@ -185,12 +185,15 @@ class StudentController extends Controller
       
       $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
       $filename = 'profile_' . $userId . '_' . time() . '.' . $ext;
-      $dest = __DIR__ . '/../../public/uploads/profiles/' . $filename;
+      $uploadDir = dirname(__DIR__, 2) . '/public/uploads/profiles/';
+      $dest = $uploadDir . $filename;
       
       if (move_uploaded_file($file['tmp_name'], $dest)) {
         $foto = url('uploads/profiles/' . $filename);
       } else {
-        flash('error', 'Erro ao salvar o arquivo.');
+        $error = error_get_last();
+        $msg = $error ? ' (' . $error['message'] . ')' : '';
+        flash('error', 'Erro ao salvar o arquivo.' . $msg);
         $this->redirect('perfil');
       }
     }
