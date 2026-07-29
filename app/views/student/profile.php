@@ -24,7 +24,7 @@ use App\Core\Csrf;
 
   <div class="col-lg-7">
     <div class="ia-card p-4">
-      <form method="post" action="<?= url('perfil') ?>">
+      <form method="post" action="<?= url('perfil') ?>" enctype="multipart/form-data">
         <input type="hidden" name="_csrf" value="<?= e(Csrf::token()) ?>">
 
         <h2 class="h6 text-gold">Editar perfil</h2>
@@ -36,11 +36,27 @@ use App\Core\Csrf;
         </div>
 
         <div class="mb-3">
-          <label class="form-label">Foto (URL)</label>
-          <input class="form-control ia-input" name="foto"
-                 value="<?= e($profileUser['foto'] ?? '') ?>">
-          <div class="form-text text-white-75">
-            Por enquanto a foto é salva como link (URL).
+          <label class="form-label">Foto de Perfil</label>
+          
+          <!-- Opção 1: Upload de Arquivo -->
+          <div class="mb-2">
+            <label class="small text-white-75">Fazer upload de imagem</label>
+            <input type="file" class="form-control ia-input" name="foto_arquivo" accept="image/*">
+          </div>
+
+          <div class="text-center my-2">
+            <span class="badge bg-dark text-white-50">OU</span>
+          </div>
+
+          <!-- Opção 2: URL da Imagem -->
+          <div>
+            <label class="small text-white-75">Usar link (URL) da imagem</label>
+            <input class="form-control ia-input" name="foto"
+                   value="<?= e($profileUser['foto'] ?? '') ?>" placeholder="https://exemplo.com/foto.jpg">
+          </div>
+          
+          <div class="form-text text-white-75 mt-2">
+            Você pode escolher fazer o upload de um arquivo do seu computador ou colar um link direto para uma imagem.
           </div>
         </div>
 

@@ -167,6 +167,34 @@ class StudentController extends Controller
     $userId = Auth::id();
     $nome = trim((string)($_POST['nome'] ?? ''));
     $foto = trim((string)($_POST['foto'] ?? ''));
+    
+    // Lógica de Upload de Foto
+    if (!empty($_FILES['foto_arquivo']['name'])) {
+      $file = $_FILES['foto_arquivo'];
+      $allowed = ['image/jpeg', 'image/png', 'image/webp'];
+      
+      if (!in_array($file['type'], $allowed)) {
+        flash('error', 'Formato de imagem inválido. Use JPG, PNG ou WEBP.');
+        $this->redirect('perfil');
+      }
+      
+      if ($file['size'] > 2 * 1024 * 1024) { // 2MB
+        flash('error', 'A imagem deve ter no máximo 2MB.');
+        $this->redirect('perfil');
+      }
+      
+      $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+      $filename = 'profile_' . $userId . '_' . time() . '.' . $ext;
+      $dest = __DIR__ . '/../../public/uploads/profiles/' . $filename;
+      
+      if (move_uploaded_file($file['tmp_name'], $dest)) {
+        $foto = url('uploads/profiles/' . $filename);
+      } else {
+        flash('error', 'Erro ao salvar o arquivo.');
+        $this->redirect('perfil');
+      }
+    }
+
     $foto = $foto !== '' ? $foto : null;
 
     if ($nome === '') {
