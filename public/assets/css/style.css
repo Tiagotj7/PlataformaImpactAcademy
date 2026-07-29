@@ -46,7 +46,7 @@ h1,h2,h3,h4,h5,h6,.font-display{ font-family: var(--font-display); letter-spacin
   color: #0B0B0B;
   font-weight: 700;
 }
-.btn-gold:hover{ filter: brightness(1.05); color:#0B0B0B; }
+.btn-gold:hover{ filter: brightness(1.1); color:#000 !important; background-color: var(--ia-gold-soft); border-color: var(--ia-gold-soft); }
 
 .btn-outline-gold{
   border-color: rgba(212,175,55,.7);
