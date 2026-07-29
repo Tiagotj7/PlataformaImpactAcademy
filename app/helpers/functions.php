@@ -116,3 +116,14 @@ function media_url(?string $path): ?string
 
   return url($path);
 }
+
+/**
+ * Estiliza o nome da marca (Impact Academy) com as cores da identidade visual.
+ */
+function brand_name(string $name): string {
+  $name = e($name);
+  // Aplica as cores da marca: Impact (Dourado) e Academy (Azul)
+  $name = preg_replace('/(Impact)/i', '<span class="text-gold">IMPACT</span>', $name);
+  $name = preg_replace('/(Academy)/i', '<span style="color: #007bff;">ACADEMY</span>', $name);
+  return $name;
+}

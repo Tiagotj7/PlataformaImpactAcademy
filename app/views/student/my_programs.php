@@ -18,7 +18,7 @@
           onerror="this.onerror=null;this.src=this.dataset.fallback;"
         >
 
-        <div class="fw-semibold"><?= e($p['nome']) ?></div>
+        <div class="fw-semibold"><?= brand_name($p['nome']) ?></div>
 
         <p class="text-white-75 small mb-2">
           <?= e((string)($p['descricao'] ?? '')) ?>

@@ -37,7 +37,7 @@ $programsList = $programs ?? [];
   <?php foreach ($programsList as $p): ?>
     <div class="col-md-4">
       <div class="ia-card p-3 h-100">
-        <div class="fw-semibold"><?= e($p['nome'] ?? '') ?></div>
+        <div class="fw-semibold"><?= brand_name($p['nome'] ?? '') ?></div>
         <a class="btn btn-gold btn-sm mt-2" href="<?= url('programa/' . (int)($p['id'] ?? 0)) ?>">Continuar</a>
       </div>
     </div>

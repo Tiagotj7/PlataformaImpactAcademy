@@ -4,8 +4,13 @@ use App\Core\Auth;
 
 $progress = new Progress();
 $userId = Auth::id();
+
+// Garantir que as variáveis existam para evitar avisos do editor
+$program = $program ?? [];
+$modules = $modules ?? [];
+$lessonModel = $lessonModel ?? new \App\Models\Lesson();
 ?>
-<h1 class="h3 mb-2"><?= e($program['nome']) ?></h1>
+<h1 class="h3 mb-2"><?= brand_name($program['nome'] ?? '') ?></h1>
 <p class="text-white-75"><?= e((string)($program['descricao'] ?? '')) ?></p>
 
 <?php if (!$modules): ?>
