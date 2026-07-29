@@ -237,3 +237,49 @@ a, button, .ia-card { will-change: transform; }
   .ia-sidebar-toggle{ display:inline-flex; }
   .ia-app{ display:block; }
 }
+
+/* =========================================================
+   USER AVATAR (sidebar)
+   ========================================================= */
+.ia-avatar-container {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid var(--ia-gold);
+  position: relative;
+  overflow: hidden;
+  background: var(--ia-panel);
+  transition: transform .2s ease;
+}
+.ia-avatar-container:hover {
+  transform: scale(1.05);
+}
+.ia-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ia-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: var(--ia-muted);
+}
+.ia-avatar-edit {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 0.8rem;
+  padding: 2px 0;
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+.ia-avatar-container:hover .ia-avatar-edit {
+  opacity: 1;
+}

@@ -17,8 +17,28 @@ function ia_nav_item(string $key, string $route, string $icon, string $label, st
 ?>
 <aside class="ia-sidebar" id="iaSidebar">
   <a class="ia-brand d-block text-decoration-none" href="<?= url('') ?>">
-    <span class="text-gold">IMPACT</span> ACADEMY
+    <span class="text-gold">IMPACT</span> <span style="color: #007bff;">ACADEMY</span>
   </a>
+
+  <?php $user = Auth::user(); ?>
+  <div class="ia-user-sidebar mt-4 mb-4 text-center">
+    <a href="<?= url('perfil') ?>" class="text-decoration-none">
+      <div class="ia-avatar-container mx-auto mb-2">
+        <?php if (!empty($user['foto'])): ?>
+          <img src="<?= e($user['foto']) ?>" alt="<?= e($user['nome']) ?>" class="ia-avatar">
+        <?php else: ?>
+          <div class="ia-avatar-placeholder">
+            <i class="bi bi-person-fill"></i>
+          </div>
+        <?php endif; ?>
+        <div class="ia-avatar-edit">
+          <i class="bi bi-camera-fill"></i>
+        </div>
+      </div>
+      <div class="ia-user-name text-white small fw-bold"><?= e($user['nome']) ?></div>
+      <div class="ia-user-role text-muted" style="font-size: 0.7rem; text-transform: uppercase;"><?= e($user['tipo']) ?></div>
+    </a>
+  </div>
 
   <nav>
     <?php if (is_admin()): ?>
